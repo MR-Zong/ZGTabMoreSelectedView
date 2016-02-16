@@ -116,6 +116,7 @@ static NSInteger const kMoreButtonWidth = 40;
     ZGTabMoreCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ZGTabMoreCell" forIndexPath:indexPath];
     
     [cell.tabButton setTitle:self.titles[indexPath.item] forState:UIControlStateNormal];
+    cell.tabButton.tag = indexPath.item;
     [cell.tabButton addTarget:self action:@selector(tabButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [cell.tabButton sizeToFit];
 
