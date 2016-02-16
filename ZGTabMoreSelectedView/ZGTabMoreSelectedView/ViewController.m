@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import "ZGTabMoreSelectedView.h"
 
-@interface ViewController ()
+@interface ViewController () <ZGTabMoreSelectedViewDelegate>
 
 @end
 
@@ -19,15 +19,30 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    NSArray *titles = @[@"中国",@"韩国",@"泰国"];
-    ZGTabMoreSelectedView *tabMoreView = [[ZGTabMoreSelectedView alloc] initWithTabTitles:titles];
+    NSArray *titles = @[@"中国",@"韩国",@"泰国",@"泰国",@"泰国",@"泰国",@"泰国",@"泰国",@"泰国",@"泰国",@"泰国"];
+    ZGTabMoreSelectedView *tabMoreView = [[ZGTabMoreSelectedView alloc] initWithTabTitles:titles frame:CGRectMake(0, 100, self.view.bounds.size.width, 100)];
+    tabMoreView.backgroundColor = [UIColor redColor];
     
+    tabMoreView.delegate = self;
     [self.view addSubview:tabMoreView];
+}
+
+
+
+#pragma mark - <ZGTabMoreSelectedViewDelegate>
+- (void)tabMoreSelectedView:(ZGTabMoreSelectedView *)tabMoreSelectedView didSelectTabButton:(UIButton *)tabButton didSelectAtIndex:(NSInteger)index
+{
+    NSLog(@"index %zd",index);
+}
+
+- (void)tabMoreSelectedView:(ZGTabMoreSelectedView *)tabMoreSelectedView didSelectMoreButton:(UIButton *)moreButton
+{
+    NSLog(@"didSelectMoreButton");
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
 }
 
 @end
