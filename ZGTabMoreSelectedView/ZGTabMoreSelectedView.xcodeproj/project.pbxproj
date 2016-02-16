@@ -16,6 +16,8 @@
 		EFE218AE1C72B5F300A62B72 /* ZGTabMoreSelectedViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EFE218AD1C72B5F300A62B72 /* ZGTabMoreSelectedViewTests.m */; };
 		EFE218B91C72B5F300A62B72 /* ZGTabMoreSelectedViewUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = EFE218B81C72B5F300A62B72 /* ZGTabMoreSelectedViewUITests.m */; };
 		EFE218CA1C72B66700A62B72 /* ZGTabMoreSelectedView.m in Sources */ = {isa = PBXBuildFile; fileRef = EFE218C91C72B66700A62B72 /* ZGTabMoreSelectedView.m */; };
+		EFE218CD1C73258E00A62B72 /* ZGTabMoreCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EFE218CC1C73258E00A62B72 /* ZGTabMoreCollectionViewCell.m */; };
+		EFE218D01C73284000A62B72 /* ZGTabMoreFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = EFE218CF1C73284000A62B72 /* ZGTabMoreFlowLayout.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +56,10 @@
 		EFE218BA1C72B5F300A62B72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EFE218C81C72B66700A62B72 /* ZGTabMoreSelectedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGTabMoreSelectedView.h; sourceTree = "<group>"; };
 		EFE218C91C72B66700A62B72 /* ZGTabMoreSelectedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGTabMoreSelectedView.m; sourceTree = "<group>"; };
+		EFE218CB1C73258E00A62B72 /* ZGTabMoreCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGTabMoreCollectionViewCell.h; sourceTree = "<group>"; };
+		EFE218CC1C73258E00A62B72 /* ZGTabMoreCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGTabMoreCollectionViewCell.m; sourceTree = "<group>"; };
+		EFE218CE1C73284000A62B72 /* ZGTabMoreFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGTabMoreFlowLayout.h; sourceTree = "<group>"; };
+		EFE218CF1C73284000A62B72 /* ZGTabMoreFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGTabMoreFlowLayout.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +163,10 @@
 			children = (
 				EFE218C81C72B66700A62B72 /* ZGTabMoreSelectedView.h */,
 				EFE218C91C72B66700A62B72 /* ZGTabMoreSelectedView.m */,
+				EFE218CB1C73258E00A62B72 /* ZGTabMoreCollectionViewCell.h */,
+				EFE218CC1C73258E00A62B72 /* ZGTabMoreCollectionViewCell.m */,
+				EFE218CE1C73284000A62B72 /* ZGTabMoreFlowLayout.h */,
+				EFE218CF1C73284000A62B72 /* ZGTabMoreFlowLayout.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -293,6 +303,8 @@
 			files = (
 				EFE2189B1C72B5F300A62B72 /* ViewController.m in Sources */,
 				EFE218CA1C72B66700A62B72 /* ZGTabMoreSelectedView.m in Sources */,
+				EFE218CD1C73258E00A62B72 /* ZGTabMoreCollectionViewCell.m in Sources */,
+				EFE218D01C73284000A62B72 /* ZGTabMoreFlowLayout.m in Sources */,
 				EFE218981C72B5F300A62B72 /* AppDelegate.m in Sources */,
 				EFE218951C72B5F300A62B72 /* main.m in Sources */,
 			);

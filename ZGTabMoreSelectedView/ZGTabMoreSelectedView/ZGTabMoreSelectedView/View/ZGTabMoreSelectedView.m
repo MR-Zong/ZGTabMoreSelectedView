@@ -7,11 +7,12 @@
 //
 
 #import "ZGTabMoreSelectedView.h"
+#import "ZGTabMoreCollectionViewCell.h"
+#import "ZGTabMoreFlowLayout.h"
 
 static NSInteger const kMoreButtonWidth = 40;
-static CGFloat const kMinTabButtonWidth = 60;
 
-@interface ZGTabMoreSelectedView ()
+@interface ZGTabMoreSelectedView () <UICollectionViewDataSource,UICollectionViewDelegate>
 
 @property (nonatomic, copy) NSArray *titles;
 
@@ -27,7 +28,7 @@ static CGFloat const kMinTabButtonWidth = 60;
 
 @property (nonatomic, assign) CGFloat moreButtonWidth;
 
-@property (nonatomic, assign) CGFloat needMoreHeight;
+@property (nonatomic, weak) UICollectionView *collectionView;
 
 
 @end
@@ -61,20 +62,21 @@ static CGFloat const kMinTabButtonWidth = 60;
     scrollView.frame = CGRectMake(0, 0, self.bounds.size.width - kMoreButtonWidth, self.bounds.size.height);
     [self addSubview:scrollView];
     
-    CGFloat tabButtonWidth = self.scrollView.frame.size.width / self.titles.count;
-    if (tabButtonWidth < kMinTabButtonWidth) {
-        tabButtonWidth = kMinTabButtonWidth;
-    }
+    CGFloat sumOfWidth = 0.0;
     for (int i=0 ; i < self.titles.count; i++) {
         NSString *title = self.titles[i];
+        
+        CGFloat tabButtonWidth = [title sizeWithAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:16]}].width + 6;
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         btn.tag = i;
-        [btn setTitle:title forState:UIControlStateNormal];
-        btn.frame = CGRectMake(i * tabButtonWidth, 0, tabButtonWidth, self.scrollView.frame.size.height);
+        NSAttributedString *attributeTitle = [[NSAttributedString alloc] initWithString:title attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:16]}];
+        [btn setAttributedTitle:attributeTitle forState:UIControlStateNormal];
+        btn.frame = CGRectMake(sumOfWidth, 0, tabButtonWidth, self.scrollView.frame.size.height);
         [btn addTarget:self action:@selector(tabButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.scrollView addSubview:btn];
+        sumOfWidth += tabButtonWidth;
     }
-    self.scrollView.contentSize = CGSizeMake(self.titles.count * tabButtonWidth , 0);
+    self.scrollView.contentSize = CGSizeMake(sumOfWidth , 0);
     
     // moreButton
     UIButton *moreButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -88,28 +90,36 @@ static CGFloat const kMinTabButtonWidth = 60;
     // moreContentView
     UIView *moreContentView = [[UIView alloc] init];
     self.moreContentView = moreContentView;
-    NSInteger row = 0;
-    NSInteger col = 0;
-    CGFloat rowMargin = 10;
-    CGFloat colMargin = rowMargin;
     
-    for (int i=0 ; i < self.titles.count; i++) {
-        NSString *title = self.titles[i];
-        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        btn.tag = i;
-        row = i / self.moreButtonColumn;
-        col = i % self.moreButtonColumn;
-        btn.frame = CGRectMake(col * (self.moreButtonWidth + colMargin), row * (self.moreButtonHeight + rowMargin) + self.bounds.size.height, self.moreButtonWidth, self.moreButtonHeight);
-        
-        btn.backgroundColor = [UIColor yellowColor];
-        [btn setTitle:title forState:UIControlStateNormal];
-        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [btn addTarget:self action:@selector(tabButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-        [self.moreContentView addSubview:btn];
-    }
-    self.needMoreHeight = (row+1) * self.moreButtonHeight + row * rowMargin;
+    ZGTabMoreFlowLayout *flowLayout = [[ZGTabMoreFlowLayout alloc] init];
+    UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height, self.bounds.size.width, 100) collectionViewLayout:flowLayout];
+    self.collectionView = collectionView;
+    collectionView.delegate = self;
+    collectionView.dataSource = self;
+    
+    [collectionView registerClass:[ZGTabMoreCollectionViewCell class] forCellWithReuseIdentifier:@"ZGTabMoreCell"];
+    collectionView.backgroundColor = [UIColor grayColor];
+    
+    [self.moreContentView addSubview:collectionView];
     moreContentView.backgroundColor = [UIColor redColor];
     
+}
+
+#pragma mark - <UICollectionViewDataSource,UICollectionViewDelegate>
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return self.titles.count;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    ZGTabMoreCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ZGTabMoreCell" forIndexPath:indexPath];
+    
+    [cell.tabButton setTitle:self.titles[indexPath.item] forState:UIControlStateNormal];
+    [cell.tabButton addTarget:self action:@selector(tabButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.tabButton sizeToFit];
+
+    return cell;
 }
 
 #pragma mark - buttonClick
@@ -148,12 +158,12 @@ static CGFloat const kMinTabButtonWidth = 60;
 {
     if (self.moreContentView.window) {
         CGRect tmpFrame = self.frame;
-        tmpFrame.size.height -= self.needMoreHeight;
+        tmpFrame.size.height -= self.collectionView.frame.size.height;
         self.frame = tmpFrame;
         [self.moreContentView removeFromSuperview];
     }else {
         CGRect tmpFrame = self.frame;
-        tmpFrame.size.height += self.needMoreHeight;
+        tmpFrame.size.height += self.collectionView.frame.size.height;
         self.frame = tmpFrame;
         self.moreContentView.frame = self.bounds;
         [self insertSubview:self.moreContentView belowSubview:self.moreButton];
