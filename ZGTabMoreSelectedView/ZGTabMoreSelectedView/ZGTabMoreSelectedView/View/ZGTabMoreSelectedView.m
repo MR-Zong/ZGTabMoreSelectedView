@@ -120,11 +120,16 @@ static CGFloat const kMinTabButtonWidth = 60;
         
         if (tabButton.frame.origin.x>self.scrollView.frame.size.width/2) {
             //当前按钮位置大于屏幕一半
+            
             if (self.scrollView.contentSize.width-tabButton.frame.origin.x-tabButton.frame.size.width/2>self.scrollView.frame.size.width/2) {
                 //当前按钮后往右边可滚动的位置大于一半
+                
+                // 如果剩下的内容不可以整个显示出来就把当前按钮的x与scrollview.frame的中点对齐
                 self.scrollView.contentOffset = CGPointMake(tabButton.frame.origin.x-self.scrollView.frame.size.width/2, 0);
             }else{
                 //当前按钮后往右边可滚动的位置小于一半 显示的滚动内容
+                
+                // 如果剩下的内容可以整个显示出来就整个显示出来
                 self.scrollView.contentOffset = CGPointMake(self.scrollView.contentSize.width-self.scrollView.frame.size.width, 0);
             }
         }else{
