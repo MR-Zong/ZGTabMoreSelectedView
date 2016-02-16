@@ -20,7 +20,7 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     NSArray *titles = @[@"中国",@"韩国",@"泰国",@"泰国",@"泰国",@"泰国",@"泰国",@"泰国",@"泰国",@"泰国",@"泰国"];
-    ZGTabMoreSelectedView *tabMoreView = [[ZGTabMoreSelectedView alloc] initWithTabTitles:titles frame:CGRectMake(0, 100, self.view.bounds.size.width, 100)];
+    ZGTabMoreSelectedView *tabMoreView = [[ZGTabMoreSelectedView alloc] initWithTabTitles:titles frame:CGRectMake(0, 64, self.view.bounds.size.width, 44)];
     tabMoreView.backgroundColor = [UIColor redColor];
     
     tabMoreView.delegate = self;

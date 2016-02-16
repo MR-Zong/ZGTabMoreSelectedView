@@ -45,7 +45,7 @@ static CGFloat const kMinTabButtonWidth = 60;
     if (self = [super initWithFrame:frame]) {
         self.titles = titles;
         self.moreButtonColumn = 5;
-        self.moreButtonHeight = 40;
+        self.moreButtonHeight = 23;
         self.moreButtonWidth = 40;
         [self initView];
     }
@@ -115,6 +115,25 @@ static CGFloat const kMinTabButtonWidth = 60;
 #pragma mark - buttonClick
 - (void)tabButtonClick:(UIButton *)tabButton
 {
+    
+    [UIView animateWithDuration:.1 animations:^{
+        
+        if (tabButton.frame.origin.x>self.scrollView.frame.size.width/2) {
+            //当前按钮位置大于屏幕一半
+            if (self.scrollView.contentSize.width-tabButton.frame.origin.x-tabButton.frame.size.width/2>self.scrollView.frame.size.width/2) {
+                //当前按钮后往右边可滚动的位置大于一半
+                self.scrollView.contentOffset = CGPointMake(tabButton.frame.origin.x-self.scrollView.frame.size.width/2, 0);
+            }else{
+                //当前按钮后往右边可滚动的位置小于一半 显示的滚动内容
+                self.scrollView.contentOffset = CGPointMake(self.scrollView.contentSize.width-self.scrollView.frame.size.width, 0);
+            }
+        }else{
+            self.scrollView.contentOffset = CGPointMake(0, 0);
+        }
+        
+    }];
+    
+    
     if (self.delegate && [self.delegate respondsToSelector:@selector(tabMoreSelectedView:didSelectTabButton:didSelectAtIndex:)]) {
         [self.delegate tabMoreSelectedView:self didSelectTabButton:tabButton didSelectAtIndex:tabButton.tag];
     }
