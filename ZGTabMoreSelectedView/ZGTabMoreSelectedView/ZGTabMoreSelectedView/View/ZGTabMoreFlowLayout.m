@@ -17,8 +17,9 @@
 - (void)prepareLayout
 {
     _attributeArray = [NSMutableArray array];
-    [self setItemSize:CGSizeMake(80, 21)];
-    [self setSectionInset:UIEdgeInsetsMake(5, 20, 20, 20)];
+//    [self setSectionInset:UIEdgeInsetsMake(5, 20, 20, 20)];
+//    self.minimumLineSpacing = 5;
+//    self.minimumInteritemSpacing = 5;
 }
 
 

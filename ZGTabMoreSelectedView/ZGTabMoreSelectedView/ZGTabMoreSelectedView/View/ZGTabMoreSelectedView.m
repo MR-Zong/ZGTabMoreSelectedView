@@ -12,7 +12,7 @@
 
 static NSInteger const kMoreButtonWidth = 40;
 
-@interface ZGTabMoreSelectedView () <UICollectionViewDataSource,UICollectionViewDelegate>
+@interface ZGTabMoreSelectedView () <UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, copy) NSArray *titles;
 
@@ -92,6 +92,8 @@ static NSInteger const kMoreButtonWidth = 40;
     self.moreContentView = moreContentView;
     
     ZGTabMoreFlowLayout *flowLayout = [[ZGTabMoreFlowLayout alloc] init];
+    flowLayout.minimumInteritemSpacing = 5;
+    flowLayout.minimumLineSpacing = 5;
     UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height, self.bounds.size.width, 100) collectionViewLayout:flowLayout];
     self.collectionView = collectionView;
     collectionView.delegate = self;
@@ -121,6 +123,15 @@ static NSInteger const kMoreButtonWidth = 40;
     [cell.tabButton sizeToFit];
 
     return cell;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *title = self.titles[indexPath.item];
+    CGSize textSize = [title sizeWithAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:15]}];
+    textSize.width += 10;
+    textSize.height += 10;
+    return textSize;
 }
 
 #pragma mark - buttonClick
